@@ -1,6 +1,8 @@
 # lattice-scripts
 Lattice qcd related scripts (most are probably too specific to be of much use; caveat emptor).  I tried to arrange these in decreasing usefulness order.
 
+===============================================================
+---------------------------------------------------------------
 1. conv\_omega.py:
 
 Convert omega's to b's and c's.  Input file:
@@ -41,6 +43,7 @@ Then, enter the scale parameters b and c. (usually 1 and 0, respectively.)
 
 N.B. The omega's can't be out of order line-by-line, i.e. that index omega[index] is not examined.
 
+----------------------------------------------------------------
 2. geom.sh (balances node geometry for SIMD layout 1 2 2 2 for equal volume layout)
 
 usage:
@@ -53,12 +56,14 @@ geom.sh 64
 
 2 2 4 4
 
+----------------------------------------------------------------
 3. nump.py
 
 usage:
 
 nump.py <..integer: max number of lattice momenta needed in k2pipiPBC calculation..>
 
+----------------------------------------------------------------
 4. residplot.sh
 
 Plot the residual history for the first 400 cg iterations.  This script needs a fairly clean working directory which has in it the slurm output history (from Grid, with --log Iterative turned on).
