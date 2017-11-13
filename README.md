@@ -1,6 +1,7 @@
-# lattice-scripts 
-Lattice qcd related scripts (most are probably too specific to be of much use; caveat emptor).  I tried to arrange these in decreasing usefulness order.
+# lattice-scripts
+(lqcd related)
 ===================================
+_Lattice qcd related scripts (most are probably too specific to be of much use; caveat emptor).  I tried to arrange these in decreasing usefulness order.
 
 -----------------------------------------------------
 1. conv\_omega.py:
