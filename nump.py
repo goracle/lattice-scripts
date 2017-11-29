@@ -25,6 +25,8 @@ def pipiEnergy(nump1, nump2):
     energy = reten(nump1)+reten(nump2)
     ecm = sqrt(energy**2-(2*pi/24)**2*norm2(nump1+nump2))
     rete = str(round(ecm, 3))
+    if len(rete) < 5:
+        rete = rete + '0'*(5-len(rete))
     return rete
 
 def reten(nump):
@@ -131,13 +133,20 @@ def main(maxpc, maxpr):
 
 def goodEprint(emat, elist):
     """Pretty print of energy data""" 
-    relist = np.array([elist]).T
-    print(elist)
+    relist = np.array([elist],dtype=object).T
+    emat = np.array(emat, dtype=object)
+    print(relist)
+    if html:
+        print("<br />")
     #len1 = len(emat)
     #pmat = np.zeros((len1, len1+1), dtype=object)
     pmat = np.concatenate((relist,emat), axis=1)
+    if len(pmat)>3:
+        print(pmat[3])
     if html:
-        table = tabulate(pmat, elist, tablefmt="html")
+        print("<br />")
+    if html:
+        table = tabulate(pmat, elist, tablefmt="html", floatfmt=".3f")
     else:
         table = tabulate(pmat, elist, tablefmt="fancy_grid")
     print("Printing statistical energy (GeV) coverage")
@@ -152,7 +161,7 @@ def goodEprint(emat, elist):
 def makemat(elist, energydict):
     """Make a matrix from dict"""
     len1 = len(elist)
-    ret = np.zeros((len1,len1))
+    ret = np.zeros((len1,len1), dtype=int)
     for i, numi in enumerate(elist):
         for j, numj in enumerate(elist):
             key = numi+' '+numj
