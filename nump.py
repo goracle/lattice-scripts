@@ -19,6 +19,12 @@ if html:
 else:
     extra=''
 
+def printn(*args,  **kwargs):
+    """print for html output in tabulate"""
+    print(*args, **kwargs)
+    if html:
+        print(extra)
+
 def pipiEnergy(nump1, nump2):
     """Return pipi energy in GEV"""
     warn("Neglecting pipi interaction energy"+extra)
@@ -38,16 +44,12 @@ def reten(nump):
 def main(maxpc, maxpr):
     if html:
         print("<p>")
-    print("Assuming max pipi relative momentum is", maxpr)
-    if html:
-        print("<br />")
+    printn("Assuming max pipi relative momentum is", maxpr)
     count=0
     plist = []
     eset = set()
     nmom=int(sys.argv[1])
-    print("Assuming max pipi center of mass momentum is "+str(maxpc))
-    if html:
-        print("<br />")
+    printn("Assuming max pipi center of mass momentum is "+str(maxpc))
     maxpn = nmom
     energydict = defaultdict(lambda: 0)
     for i in range(-maxpn,maxpn+1):
@@ -58,13 +60,9 @@ def main(maxpc, maxpr):
                 else:
                     count+=1
                     plist.append([i,j,k])
-    print("Number of single particle momenta combinations=",count)
-    if html:
-        print("<br />")
+    printn("Number of single particle momenta combinations=",count)
     #3 rho polarizations + 1 sigma + 1 pion = num of species
-    print("Number of meson fields needed=",count*5)
-    if html:
-        print("<br />")
+    printn("Number of meson fields needed=",count*5)
     plist = np.array(plist)
     #now count the number of pipi momentum combinations
     count = 0
@@ -78,7 +76,7 @@ def main(maxpc, maxpr):
                 continue
             #V
             if debug:
-                print('V', i, j)
+                printn('V', i, j)
             count+=1
             for num2, k in enumerate(plist):
                 #aux diagram cut
@@ -93,7 +91,7 @@ def main(maxpc, maxpr):
                 if norm2(l-k) > maxpr**2 and relmomcut:
                     continue
                 if debug:
-                    print('CDR=', i, j, k)
+                    printn('CDR=', i, j, k)
                 count+=5 #D,R,Dvec,Rvec,C
                 esrc = pipiEnergy(i,j)
                 esnk = pipiEnergy(l,k)
@@ -102,9 +100,7 @@ def main(maxpc, maxpr):
                 eset.add(float(esrc))
                 eset.add(float(esnk))
                 energydict[ekey] += 5
-    print("Number of pipi momentum combinations=", count)
-    if html:
-        print("<br />")
+    printn("Number of pipi momentum combinations=", count)
     count+=3*len(plist) #pionChk, pion, sigma correlator
     count+=6*len(plist) #rho correlator (aux cut, so not 9)
     count+=len(plist) #sigma bubbles
@@ -121,9 +117,7 @@ def main(maxpc, maxpr):
                 continue
             count+=1 #T sigma sink
             count+=2*3 #rho sink
-    print("Number of momentum combinations=", count)
-    if html:
-        print("<br />")
+    printn("Number of momentum combinations=", count)
     elist = convSet(eset)
     emat = makemat(elist, energydict)
     #energyPrint(energydict)
@@ -135,26 +129,19 @@ def goodEprint(emat, elist):
     """Pretty print of energy data""" 
     relist = np.array([elist],dtype=object).T
     emat = np.array(emat, dtype=object)
-    print(relist)
-    if html:
-        print("<br />")
+    #printn(relist)
     #len1 = len(emat)
     #pmat = np.zeros((len1, len1+1), dtype=object)
     pmat = np.concatenate((relist,emat), axis=1)
-    if len(pmat)>3:
-        print(pmat[3])
-    if html:
-        print("<br />")
+    #if len(pmat)>3:
+    #printn(pmat[3])
     if html:
         table = tabulate(pmat, elist, tablefmt="html", floatfmt=".3f")
     else:
         table = tabulate(pmat, elist, tablefmt="fancy_grid")
-    print("Printing statistical energy (GeV) coverage")
-    if html:
-        print("<br />")
-    print("entries are number of momentum combinations with that COM energy")
-    if html:
-        print("<br />")
+    printn("Printing statistical energy (GeV) coverage")
+    printn("entries are number of momentum combinations with that COM energy")
+    printn("")
     print(table)
 
 
@@ -181,9 +168,9 @@ def convSet(eset):
 
 def energyPrint(elist):
     """Print energy"""
-    print("E(GeV)->src, snk|Combinations")
+    printn("E(GeV)->src, snk|Combinations")
     for k, v in elist.items():
-        print(f'{k:<4} | {v}')
+        printn(f'{k:<4} | {v}')
 
 
 def norm2(mom):
