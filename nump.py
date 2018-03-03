@@ -29,7 +29,7 @@ def pipiEnergy(nump1, nump2):
     """Return pipi energy in GEV"""
     warn("Neglecting pipi interaction energy"+extra)
     energy = reten(nump1)+reten(nump2)
-    ecm = sqrt(energy**2-(2*pi/24)**2*norm2(nump1+nump2))
+    ecm = sqrt(energy**2-1.4*1.4*(2*pi/32)**2*norm2(nump1+nump2))
     rete = str(round(ecm, 3))
     if len(rete) < 5:
         rete = rete + '0'*(5-len(rete))
@@ -38,8 +38,8 @@ def pipiEnergy(nump1, nump2):
 def reten(nump):
     """Do the numerics for the energy"""
     warn("Assuming volume is 24c."+extra)
-    onedv = 24
-    return sqrt((.139570)**2+(2*pi/onedv)**2*norm2(nump))
+    onedv = 32
+    return sqrt((.139570)**2+1.4*1.4*(2*pi/onedv)**2*norm2(nump))
 
 def main(maxpc, maxpr):
     if html:
