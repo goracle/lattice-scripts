@@ -79,9 +79,9 @@ def main(maxpc, maxpr):
                 printn('V', i, j)
             count+=1
             for num2, k in enumerate(plist):
-                #aux diagram cut
-                if num2 < num1:
-                    continue
+                #aux diagram cut (to do)
+                #if num2 < num1:
+                #    continue
                 #cons of momentum
                 l = i+j-k
                 #check to see if result is in list
