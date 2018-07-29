@@ -66,6 +66,7 @@ geom.sh 64
 usage:
 
 nump.py <..integer: max number of lattice momenta needed in k2pipiPBC calculation..>
+(out of date, needs to be fixed with the full set)
 
 ----------------------------------------------------------------
 4. residplot.sh
