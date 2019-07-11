@@ -3,34 +3,20 @@
 f1=$(mktemp)
 f2=$(mktemp)
 cd "job-0$1" || exit 1
-echo "looking at first job"
-for file in *slurm*
+for file in out-*
 do
-a=$(grep -c 'end of program.' $file)
+a=$(grep -c 'End()' $file)
 if [ $a -gt 0 ]; then
-echo $file
-grep -e '^AlgPion2pt' $file > $f1
-grep -e '^main..main' $file  >> $f1
-sed -r -i -- 's/^:://' $f1
-sed -i -- 's/AlgPion2pt:://' $f1
-#cat $f1
-#exit
+grep AlgPion2pt $file > $f1
 break
 fi
 done
 cd "../job-0$2" || exit 1
-echo "looking at second job"
-for file in *slurm*
+for file in out-* 
 do
-a=$(grep -c 'end of program.' $file)
+a=$(grep -c 'End()' $file)
 if [ $a -gt 0 ]; then
-echo $file
-grep -e '^AlgPion2pt' $file > $f2
-grep -e '^main..main' $file  >> $f2
-sed -r -i -- 's/^:://' $f2
-sed -i -- 's/AlgPion2pt:://' $f2
-#cat $f2
-#exit
+grep AlgPion2pt $file > $f2
 break
 fi
 done
@@ -45,5 +31,4 @@ awk '
                     printf( "%-"a[i]"s ",F[q,i])
                     }print ""
             }
-    }' $f1 $f2  | sed '/^\s*$/d'
-
+    }' $f1 $f2 | sed 's/printMem.*//g' | sed 's/AlgPion2pt//g' | sed 's/:://g' | sed '/^\s*$/d'

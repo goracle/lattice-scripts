@@ -33,8 +33,8 @@ done
 #simd layout is 1 2 2 2, and time direction is typically double spatial
 #thus, balance the result
 if [ "$nCores" = "2" ]; then
-	echo "1 1 1 2"
-	exit
+        echo "1 1 1 2"
+        exit
 fi
 x[3]=2 #x
 x[0]=2 #t
@@ -45,8 +45,8 @@ while [ $n -gt 1 ]
 do
     c=$(echo "$c+1" | bc -l)
     if [ $c -gt 3 ]; then
-	c=-1;
-	continue;
+        c=-1;
+        continue;
     fi
     x[$c]=$(echo "${x[$c]}*2" | bc -l);
     n=$(echo "${n}/2" | bc);
